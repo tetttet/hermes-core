@@ -42,7 +42,7 @@ const releases: ReleaseCard[] = [
 
 const AiCards = () => {
   return (
-    <section className="w-full bg-[#f4f2eb] px-6 py-12 md:px-10 lg:px-0">
+    <section className="w-full bg-[#f4f2eb] px-6 pb-12 pt-0 md:px-10 lg:px-0 pt-24">
       <div className="mx-auto max-w-340">
         <h2 className="mb-8 text-[24px] font-semibold leading-none tracking-[-0.02em] text-[#111111]">
           Latest releases <span className="underline">AI Models</span>

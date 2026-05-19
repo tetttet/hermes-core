@@ -42,11 +42,11 @@ const MainHero = () => {
     "m-0 text-sm leading-5 md:text-base md:leading-6 lg:text-base lg:leading-6";
 
   return (
-    <section className="w-full min-h-svh bg-[#f1f1f1] text-[#212121] max-md:-mb-2.5">
-      <div className="flex min-h-svh flex-col justify-between">
+    <section className="w-full bg-[#f4f2eb] text-[#212121] max-md:-mb-2.5">
+      <div className="flex min-h-[90svh] flex-col justify-between">
         <div aria-hidden="true" />
 
-        <div className="flex min-h-[75vh] flex-col justify-between max-md:min-h-[85vh]">
+        <div className="flex min-h-[65vh] flex-col justify-between max-md:min-h-[65vh]">
           <div className="flex justify-between gap-5 pl-5 md:pl-7 lg:pl-12">
             <div>
               <h1
@@ -86,7 +86,7 @@ const MainHero = () => {
             </div>
           </div>
 
-          <div className="flex min-h-[22vh] flex-col gap-[30px] border-t border-t-[#212121]/30 py-5 max-md:mb-20">
+          <div className="flex flex-col border-t border-t-[#212121]/30 py-5">
             <div
               style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}
               className="flex flex-col items-start gap-5 px-5 md:flex-row md:items-center md:justify-between md:px-[30px] lg:px-[50px]"

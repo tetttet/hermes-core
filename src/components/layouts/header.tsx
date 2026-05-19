@@ -137,16 +137,9 @@ const Header = () => {
       style={{
         backgroundColor: isDesktop
           ? mobileMenuOpen
-            ? "#f1f1f1"
-            : `#f1f1f1`
-          : "#f1f1f1",
-        borderBottom: isDesktop
-          ? mobileMenuOpen
-            ? "1px solid rgba(0,0,0,0.06)"
-            : `1px solid rgba(0,0,0,${0.06 * e})`
-          : mobileHeaderElevated
-            ? "1px solid rgba(0,0,0,0.06)"
-            : "1px solid rgba(0,0,0,0.03)",
+            ? "#f4f2eb"
+            : `#f4f2eb`
+          : "#f4f2eb",
       }}
     >
       {/* ── Top bar ── */}
@@ -228,7 +221,7 @@ const Header = () => {
                 >
                   <div
                     style={{
-                      background: "rgba(255,255,255,0.96)",
+                      background: "#faf9f6",
                       backdropFilter: "blur(20px)",
                       WebkitBackdropFilter: "blur(20px)",
                       borderRadius: "18px",

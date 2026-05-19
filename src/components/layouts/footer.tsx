@@ -63,7 +63,7 @@ const Footer = () => {
             <div key={column.key} className="space-y-8">
               {column.sections.map((section) => (
                 <div key={section.heading} className="space-y-2">
-                  <h2 className="text-[12.5px] font-semibold tracking-[-0.01em] text-white">
+                  <h2 className="select-none text-[12.5px] font-semibold tracking-[-0.01em] text-white">
                     {section.heading}
                   </h2>
 
