@@ -6,7 +6,13 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="relative mt-auto overflow-hidden bg-[#12110f] text-[#f5f1e8]">
+    <footer
+      className="relative mt-auto text-[#f5f1e8]"
+      style={{
+        background:
+          "radial-gradient(circle at left 18% top 5.5rem, rgba(164, 132, 74, 0.14), transparent 16rem), radial-gradient(circle at right top, rgba(67, 91, 74, 0.12), transparent 18rem), #12110f",
+      }}
+    >
       <div
         aria-hidden="true"
         className="absolute inset-x-0 top-0 h-px"
@@ -14,17 +20,6 @@ const Footer = () => {
           background:
             "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.24) 52%, rgba(255,255,255,0) 100%)",
         }}
-      />
-
-      <div
-        aria-hidden="true"
-        className="absolute -left-20 top-16 h-64 w-64 rounded-full blur-3xl"
-        style={{ background: "rgba(164, 132, 74, 0.12)" }}
-      />
-      <div
-        aria-hidden="true"
-        className="absolute right-0 top-0 h-80 w-80 -translate-y-1/3 rounded-full blur-3xl"
-        style={{ background: "rgba(67, 91, 74, 0.12)" }}
       />
 
       <div className="relative mx-auto max-w-360 px-6 py-14 sm:px-8 md:py-18 lg:px-12 lg:pb-12 lg:pt-22 xl:px-16">

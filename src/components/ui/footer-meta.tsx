@@ -30,7 +30,7 @@ export function FooterMeta({ year }: { year: number }) {
             rel={
               link.href.startsWith("http") ? "noopener noreferrer" : undefined
             }
-            className="group inline-flex h-11 w-11 items-center justify-center rounded-full text-[#f5f1e8] backdrop-blur-sm transition-[border-color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/8 hover:shadow-[0_18px_38px_rgba(0,0,0,0.28)]"
+            className="group inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-[#f5f1e8] transition-[border-color,background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/8 hover:shadow-[0_18px_38px_rgba(0,0,0,0.28)]"
             style={{ textDecoration: "none" }}
           >
             <SocialIcon kind={link.kind} />
