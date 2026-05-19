@@ -5,7 +5,7 @@ import Link from "next/link";
 export function FooterMeta({ year }: { year: number }) {
   return (
     <div className="space-y-3">
-      <p className="min-w-120 text-[12px] text-[#a39b8f]">
+      <p className="max-w-[30rem] text-[12px] text-[#a39b8f]">
         © {year} Hermes AI. All rights reserved.
         <br />
         Built by{" "}
