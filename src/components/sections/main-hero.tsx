@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import localFont from "next/font/local";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,23 +19,40 @@ const neueMontreal = localFont({
 
 const MainHero = () => {
   const [isImageRevealed, setIsImageRevealed] = useState(false);
+  const [revealedImageWidth, setRevealedImageWidth] = useState(0);
+  const imageFrameRef = useRef<HTMLSpanElement | null>(null);
 
   useEffect(() => {
+    const imageFrame = imageFrameRef.current;
+
+    if (!imageFrame) {
+      return;
+    }
+
+    const updateImageWidth = () => {
+      setRevealedImageWidth(imageFrame.getBoundingClientRect().width);
+    };
+
+    updateImageWidth();
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateImageWidth();
+    });
+
+    resizeObserver.observe(imageFrame);
+
     const revealFrame = window.requestAnimationFrame(() => {
       setIsImageRevealed(true);
     });
 
     return () => {
+      resizeObserver.disconnect();
       window.cancelAnimationFrame(revealFrame);
     };
   }, []);
 
   const copyTextClasses =
     "m-0 text-base leading-6 min-[1025px]:text-lg min-[1025px]:leading-[26px]";
-
-  const revealWidthClasses = isImageRevealed
-    ? "w-16 min-[401px]:w-[74px] min-[769px]:w-[100px] min-[1025px]:w-[120px]"
-    : "w-0";
 
   return (
     <section className="w-full min-h-svh bg-[#f1f1f1] text-[#212121] max-[768px]:-mb-2.5">
@@ -52,16 +69,19 @@ const MainHero = () => {
                 <br />
                 <span className="flex items-center gap-[5px]">
                   <span
-                    className={`inline-flex shrink-0 overflow-hidden leading-[130px] transition-[width] delay-[200ms] duration-800 ease-[cubic-bezier(0.86,0,0.07,0.995)] ${revealWidthClasses}`}
+                    className="inline-flex shrink-0 overflow-hidden leading-[130px] transition-[width] delay-[200ms] duration-800 ease-[cubic-bezier(0.86,0,0.07,0.995)]"
+                    style={{ width: isImageRevealed ? `${revealedImageWidth}px` : "0px" }}
                   >
-                    <Image
-                      src="/main-hero/ochi-side.jpg"
-                      alt="Ochi hero preview"
-                      width={120}
-                      height={50}
-                      priority
-                      className="mt-[10px] h-10 w-16 rounded-[10px] object-cover min-[401px]:h-[45px] min-[401px]:w-[74px] min-[769px]:h-[63px] min-[769px]:w-[100px] min-[1025px]:h-[50px] min-[1025px]:w-auto min-[1491px]:mt-[15px] min-[1491px]:h-[95px]"
-                    />
+                    <span ref={imageFrameRef} className="inline-flex shrink-0">
+                      <Image
+                        src="/icon.png"
+                        alt="Hermes hero preview"
+                        width={120}
+                        height={120}
+                        priority
+                        className="mt-[10px] h-10 w-auto rounded-[10px] object-cover min-[401px]:h-[45px] min-[769px]:h-[63px] min-[1025px]:h-[50px] min-[1491px]:mt-[15px] min-[1491px]:h-[95px]"
+                      />
+                    </span>
                   </span>
                   <span>open-source</span>
                 </span>
