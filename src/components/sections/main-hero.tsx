@@ -2,7 +2,7 @@ import React from 'react'
 
 const MainHero = () => {
   return (
-    <div className='h-screen'>MainHero</div>
+    <div className="min-h-[100svh]">MainHero</div>
   )
 }
 

@@ -10,6 +10,10 @@ import { SubItem } from "../ui/header-subitem";
 import { AnimatedLogo } from "../ui/animated-logo";
 
 const MOBILE_MENU_ID = "header-mobile-menu";
+const HEADER_MIN_HEIGHT_REM = 4.5;
+const HEADER_VERTICAL_PADDING_REM = 1;
+const MOBILE_SCROLL_THRESHOLD = 8;
+
 const getMenuId = (label: string, variant: "desktop" | "mobile") =>
   `header-menu-${variant}-${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
@@ -17,6 +21,8 @@ const getMenuId = (label: string, variant: "desktop" | "mobile") =>
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+  const [mobileScrolled, setMobileScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const headerRef = useRef<HTMLElement | null>(null);
 
@@ -38,15 +44,33 @@ const Header = () => {
       }
     };
 
-    const updateScrollProgress = () => {
-      const next = Math.min(window.scrollY / 140, 1);
-      setScrollProgress((c) => (Math.abs(c - next) < 0.01 ? c : next));
-      frameId = null;
+    const syncScrollState = () => {
+      if (desktopQuery.matches) {
+        const next = Math.min(window.scrollY / 140, 1);
+        setScrollProgress((current) =>
+          Math.abs(current - next) < 0.01 ? current : next,
+        );
+        return;
+      }
+
+      setScrollProgress((current) => (current === 0 ? current : 0));
+      setMobileScrolled((current) => {
+        const next = window.scrollY > MOBILE_SCROLL_THRESHOLD;
+        return current === next ? current : next;
+      });
+    };
+
+    const scheduleSync = () => {
+      if (frameId !== null) return;
+      frameId = window.requestAnimationFrame(() => {
+        setIsDesktop(desktopQuery.matches);
+        syncScrollState();
+        frameId = null;
+      });
     };
 
     const handleScroll = () => {
-      if (frameId !== null) return;
-      frameId = window.requestAnimationFrame(updateScrollProgress);
+      scheduleSync();
     };
 
     const handleDesktopChange = (event: MediaQueryListEvent) => {
@@ -54,9 +78,10 @@ const Header = () => {
         setActiveMenu(null);
         setMobileMenuOpen(false);
       }
+      scheduleSync();
     };
 
-    updateScrollProgress();
+    scheduleSync();
     document.addEventListener("mousedown", handlePointerDown);
     document.addEventListener("keydown", handleEscape);
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -91,9 +116,10 @@ const Header = () => {
   };
 
   const e = 1 - Math.pow(1 - scrollProgress, 3);
-  const headerH = 4.5 - 0.5 * e;
-  const headerP = 1 - 0.2 * e;
-  const mobileHeaderOffset = headerH + headerP * 2;
+  const logoProgress = isDesktop ? e : 0;
+  const mobileHeaderOffset =
+    HEADER_MIN_HEIGHT_REM + HEADER_VERTICAL_PADDING_REM * 2;
+  const mobileHeaderElevated = mobileMenuOpen || mobileScrolled;
   const getMobileItemMotion = (index: number) => ({
     opacity: mobileMenuOpen ? 1 : 0,
     transform: mobileMenuOpen
@@ -109,15 +135,29 @@ const Header = () => {
       ref={headerRef}
       className="sticky top-0 z-50 text-black"
       style={{
-        backgroundColor: mobileMenuOpen ? "#fff" : `rgba(255,255,255,${0.8 * e})`,
-        borderBottom: mobileMenuOpen
-          ? "1px solid rgba(0,0,0,0.06)"
-          : `1px solid rgba(0,0,0,${0.06 * e})`,
-        boxShadow: mobileMenuOpen
-          ? "0 12px 36px rgba(15,23,42,0.07)"
-          : `0 8px 32px rgba(15,23,42,${0.05 * e})`,
-        backdropFilter: mobileMenuOpen ? "none" : `blur(${16 * e}px)`,
-        WebkitBackdropFilter: mobileMenuOpen ? "none" : `blur(${16 * e}px)`,
+        backgroundColor: isDesktop
+          ? mobileMenuOpen
+            ? "#fff"
+            : `rgba(255,255,255,${0.8 * e})`
+          : "rgba(255,255,255,0.98)",
+        borderBottom: isDesktop
+          ? mobileMenuOpen
+            ? "1px solid rgba(0,0,0,0.06)"
+            : `1px solid rgba(0,0,0,${0.06 * e})`
+          : mobileHeaderElevated
+            ? "1px solid rgba(0,0,0,0.06)"
+            : "1px solid rgba(0,0,0,0.03)",
+        boxShadow: isDesktop
+          ? mobileMenuOpen
+            ? "0 12px 36px rgba(15,23,42,0.07)"
+            : `0 8px 32px rgba(15,23,42,${0.05 * e})`
+          : mobileHeaderElevated
+            ? "0 10px 30px rgba(15,23,42,0.06)"
+            : "none",
+        backdropFilter:
+          isDesktop && !mobileMenuOpen ? `blur(${16 * e}px)` : "none",
+        WebkitBackdropFilter:
+          isDesktop && !mobileMenuOpen ? `blur(${16 * e}px)` : "none",
         transition:
           "background-color 0.4s, border-color 0.4s, box-shadow 0.4s, backdrop-filter 0.4s",
       }}
@@ -126,13 +166,11 @@ const Header = () => {
       <div
         className="mx-auto flex max-w-360 items-center justify-between gap-6 px-5 sm:px-8 lg:px-12"
         style={{
-          minHeight: `${headerH}rem`,
-          paddingTop: `${headerP}rem`,
-          paddingBottom: `${headerP}rem`,
+          minHeight: `${HEADER_MIN_HEIGHT_REM}rem`,
+          paddingTop: `${HEADER_VERTICAL_PADDING_REM}rem`,
+          paddingBottom: `${HEADER_VERTICAL_PADDING_REM}rem`,
           position: "relative",
           zIndex: 20,
-          transition:
-            "min-height 0.4s cubic-bezier(0.16,1,0.3,1), padding 0.4s cubic-bezier(0.16,1,0.3,1)",
         }}
       >
         {/* Logo */}
@@ -142,7 +180,7 @@ const Header = () => {
           className="shrink-0 rounded-md text-[22px] font-black uppercase tracking-tight text-black outline-none focus-visible:ring-2 focus-visible:ring-black/15"
           style={{ textDecoration: "none" }}
         >
-          <AnimatedLogo progress={e} />
+          <AnimatedLogo progress={logoProgress} />
         </Link>
 
         {/* Desktop nav */}
@@ -325,11 +363,11 @@ const Header = () => {
           style={{
             position: "absolute",
             inset: "0 0 auto 0",
-            height: mobileMenuOpen ? "100dvh" : `${mobileHeaderOffset}rem`,
+            height: mobileMenuOpen ? "100dvh" : "0px",
             background: "#fff",
             boxShadow: mobileMenuOpen
               ? "0 24px 80px rgba(15,23,42,0.08)"
-              : "0 10px 30px rgba(15,23,42,0.03)",
+              : "none",
             transition:
               "height 0.62s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s cubic-bezier(0.16,1,0.3,1)",
           }}
@@ -338,9 +376,13 @@ const Header = () => {
           onClick={(event) => event.stopPropagation()}
           style={{
             position: "relative",
-            height: "100dvh",
-            overflowY: "auto",
-            padding: `calc(${mobileHeaderOffset}rem + 12px) 20px 28px`,
+            height: mobileMenuOpen ? "100dvh" : "0px",
+            overflowY: mobileMenuOpen ? "auto" : "hidden",
+            padding: mobileMenuOpen
+              ? `calc(${mobileHeaderOffset}rem + 12px) 20px 28px`
+              : "0 20px",
+            transition:
+              "height 0.62s cubic-bezier(0.16,1,0.3,1), padding 0.24s cubic-bezier(0.16,1,0.3,1)",
           }}
         >
           <nav
