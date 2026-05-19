@@ -6,8 +6,9 @@ import Header from "@/components/layouts/header";
 import Footer from "@/components/layouts/footer";
 
 export const metadata: Metadata = {
-  title: "Hermes",
-  description: "Hermes landing page",
+  title: "Hermes | Core AI Models",
+  description:
+    "At Hermes, we build AI to serve humanity’s long-term well-being.",
 };
 
 export default function RootLayout({

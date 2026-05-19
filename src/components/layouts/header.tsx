@@ -137,9 +137,9 @@ const Header = () => {
       style={{
         backgroundColor: isDesktop
           ? mobileMenuOpen
-            ? "#fff"
-            : `rgba(255,255,255,${0.8 * e})`
-          : "rgba(255,255,255,0.98)",
+            ? "#f1f1f1"
+            : `#f1f1f1`
+          : "#f1f1f1",
         borderBottom: isDesktop
           ? mobileMenuOpen
             ? "1px solid rgba(0,0,0,0.06)"
@@ -147,19 +147,6 @@ const Header = () => {
           : mobileHeaderElevated
             ? "1px solid rgba(0,0,0,0.06)"
             : "1px solid rgba(0,0,0,0.03)",
-        boxShadow: isDesktop
-          ? mobileMenuOpen
-            ? "0 12px 36px rgba(15,23,42,0.07)"
-            : `0 8px 32px rgba(15,23,42,${0.05 * e})`
-          : mobileHeaderElevated
-            ? "0 10px 30px rgba(15,23,42,0.06)"
-            : "none",
-        backdropFilter:
-          isDesktop && !mobileMenuOpen ? `blur(${16 * e}px)` : "none",
-        WebkitBackdropFilter:
-          isDesktop && !mobileMenuOpen ? `blur(${16 * e}px)` : "none",
-        transition:
-          "background-color 0.4s, border-color 0.4s, box-shadow 0.4s, backdrop-filter 0.4s",
       }}
     >
       {/* ── Top bar ── */}
