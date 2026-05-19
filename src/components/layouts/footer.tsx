@@ -28,10 +28,30 @@ const Footer = () => {
             <Link
               href="/"
               aria-label="Hermes home"
-              className="select-none inline-flex w-fit items-center text-[32px] font-black uppercase leading-none tracking-[-0.08em] text-white transition-opacity duration-200 hover:opacity-80"
+              className="group select-none inline-flex w-fit items-center whitespace-nowrap text-[32px] font-black uppercase leading-none tracking-[-0.08em] text-white"
               style={{ textDecoration: "none" }}
             >
-              H /
+              <span aria-hidden="true" className="shrink-0">
+                H
+              </span>
+              <span
+                aria-hidden="true"
+                className="inline-block max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-hover:max-w-[5.6ch] group-hover:opacity-100 group-focus-visible:max-w-[5.6ch] group-focus-visible:opacity-100"
+              >
+                ERMES
+              </span>
+              <span
+                aria-hidden="true"
+                className="shrink-0 ml-[0.16em] transition-[margin-left] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-hover:ml-0 group-focus-visible:ml-0"
+              >
+                /
+              </span>
+              <span
+                aria-hidden="true"
+                className="inline-block max-w-0 overflow-hidden whitespace-nowrap opacity-0 transition-[max-width,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none group-hover:max-w-[2.4ch] group-hover:opacity-100 group-focus-visible:max-w-[2.4ch] group-focus-visible:opacity-100"
+              >
+                AI
+              </span>
             </Link>
 
             <div className="hidden lg:block">

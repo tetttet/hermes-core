@@ -6,7 +6,7 @@ import Header from "@/components/layouts/header";
 import Footer from "@/components/layouts/footer";
 
 export const metadata: Metadata = {
-  title: "Hermes | Core AI Models",
+  title: "Hermes / Core AI Models",
   description:
     "At Hermes, we build AI to serve humanity’s long-term well-being.",
 };
