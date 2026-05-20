@@ -48,7 +48,7 @@ const MainFaqs = () => {
           </h2>
         </div>
 
-        <div className="pt-[12px]">
+        <div className="pt-1.5">
           {faqs.map((item, index) => (
             <div
               key={item.question}
