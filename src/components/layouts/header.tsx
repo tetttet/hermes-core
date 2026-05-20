@@ -250,24 +250,18 @@ const Header = () => {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="#try-hermes"
-            className="inline-flex items-center gap-1.5 rounded-[14px] bg-black px-5.5 py-2.5 text-[14px] font-medium tracking-[0.01em] text-white transition-[background-color,transform] duration-200 hover:bg-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20"
+            className="inline-flex items-center gap-1.5 rounded-[12px] bg-black px-5.5 py-2.5 text-[14px] font-medium tracking-[0.01em] text-white transition-[background-color,transform] duration-200 hover:bg-black/85 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20"
             style={{
               textDecoration: "none",
             }}
           >
             Try Hermes
             <svg
-              viewBox="0 0 16 16"
-              width="13"
-              height="13"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              aria-hidden="true"
-              style={{ opacity: 0.7 }}
+              viewBox="0 0 24 24"
+              className="h-5 w-5 fill-none stroke-current [stroke-width:1.25]"
             >
-              <path d="M3 8h10M9 4l4 4-4 4" />
+              <path d="M7 17 17 7" />
+              <path d="M8 7h9v9" />
             </svg>
           </Link>
         </div>
